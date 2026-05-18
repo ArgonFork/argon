@@ -25,7 +25,7 @@ pub const QUEUE_TIMEOUT: Duration = Duration::from_secs(60);
 // VFS events will be ignored for this amount of time
 // after the last change that has been made by the client,
 // this saves a lot of computing time
-pub const SYNCBACK_DEBOUNCE_TIME: Duration = Duration::from_millis(200);
+pub const SYNCBACK_DEBOUNCE_TIME: Duration = Duration::from_millis(300);
 
 // Set of default sync rules that is used to determine
 // what middleware should be used to process a file
