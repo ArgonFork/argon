@@ -23,6 +23,7 @@ mod stop;
 mod subscribe;
 mod unsubscribe;
 mod write;
+mod ws;
 
 #[derive(Debug, Clone, Serialize, FromOne)]
 pub enum Message {
@@ -100,6 +101,7 @@ impl Server {
 				.service(open::main)
 				.service(stop::main)
 				.service(home::main)
+				.service(ws::upgrade)
 				.default_service(web::to(Self::default_redirect))
 		})
 		.backlog(0)
