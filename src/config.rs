@@ -53,6 +53,8 @@ pub struct Config {
 	pub run_async: bool,
 	/// Scan for the first available port if selected one is in use
 	pub scan_ports: bool,
+	/// Server transport: "http" (default) or "websocket"
+	pub transport: String,
 	/// Automatically detect project type
 	pub detect_project: bool,
 	/// Use smart path resolver when running commands
@@ -115,6 +117,7 @@ impl Default for Config {
 
 			run_async: false,
 			scan_ports: true,
+			transport: String::from("http"),
 			detect_project: true,
 			smart_paths: false,
 			with_sourcemap: false,

@@ -4,10 +4,12 @@ use actix_web::{
 	App, HttpServer, Responder,
 };
 use derive_from_one::FromOne;
+use log::info;
 use serde::{Deserialize, Serialize};
 use std::{io::Result, net::TcpListener, sync::Arc};
 
 use crate::{
+	config::Config,
 	constants::MAX_PAYLOAD_SIZE,
 	core::{changes::Changes, Core},
 	project::ProjectDetails,
@@ -83,12 +85,17 @@ impl Server {
 	#[actix_web::main]
 	pub async fn start(&self) -> Result<()> {
 		let core = self.core.clone();
+		let use_ws = Config::new().transport == "websocket";
+
+		if use_ws {
+			info!("WebSocket transport enabled at /ws");
+		}
 
 		HttpServer::new(move || {
 			let mut msgpack_config = MsgPackConfig::default();
 			msgpack_config.limit(MAX_PAYLOAD_SIZE);
 
-			App::new()
+			let app = App::new()
 				.app_data(Data::new(core.clone()))
 				.app_data(msgpack_config)
 				.service(details::main)
@@ -101,8 +108,13 @@ impl Server {
 				.service(open::main)
 				.service(stop::main)
 				.service(home::main)
-				.service(ws::upgrade)
-				.default_service(web::to(Self::default_redirect))
+				.default_service(web::to(Self::default_redirect));
+
+			if use_ws {
+				app.service(ws::upgrade)
+			} else {
+				app
+			}
 		})
 		.backlog(0)
 		.disable_signals()
