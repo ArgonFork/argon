@@ -96,7 +96,7 @@ impl Program {
 
 	fn get_command(&self) -> Command {
 		if self.program == ProgramName::Argon {
-			let mut command = Command::new(env::current_exe().unwrap_or(PathBuf::from("argon")));
+			let mut command = Command::new(env::current_exe().unwrap_or(PathBuf::from("argon-ex")));
 
 			let verbosity = util::env_verbosity().as_str();
 			let log_style = util::env_log_style().to_string();

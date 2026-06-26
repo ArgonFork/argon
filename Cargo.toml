@@ -1,7 +1,7 @@
 [package]
 name = "argon-rbx"
 authors = ["Dervex"]
-description = "Full featured tool for Roblox development"
+description = "Argon Extended - full featured tool for Roblox development"
 repository = "https://github.com/argon-rbx/argon"
 documentation = "https://argon.wiki/docs"
 homepage = "https://argon.wiki"
@@ -11,7 +11,7 @@ edition = "2021"
 build = "build.rs"
 
 [[bin]]
-name = "argon"
+name = "argon-ex"
 path = "src/main.rs"
 
 [lib]
